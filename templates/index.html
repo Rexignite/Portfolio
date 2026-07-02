@@ -1,0 +1,442 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+    <div class="animated-bg">
+        <div class="gradient-orbe orbe-1"></div>
+        <div class="gradient-orbe orbe-2"></div>
+        <div class="gradient-orbe orbe-3"></div>
+    </div>
+    <div class="container hero-content">
+        <div class="badge">🐍 Django Developer</div>
+        <h1>Hi, I'm <span class="highlight">Ritesh Kumar</span></h1>
+        <div class="role">Backend Developer <span class="role-highlight">using Python & Django</span></div>
+        <p class="hero-desc">Building robust backends and learning modern web technologies.</p>
+        <div class="btn-group">
+            <a href="{% url 'portfolio:project_list' %}" class="btn-primary">View Projects</a>
+            <a href="{% url 'portfolio:download_resume' %}" class="btn-outline">
+                <i class="fas fa-download"></i> Download Resume
+            </a>
+        </div>
+        <div class="social-links-hero">
+            <a href="https://github.com/Rexignite" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="mailto:riteshyadav.22564@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PROFILE SECTION - WITH PHOTO UPLOAD ===== -->
+<section class="section" id="profile">
+    <div class="container">
+        <h2 class="section-title scroll-reveal">Professional <span class="highlight">Profile</span></h2>
+        <div class="section-divider"></div>
+        
+        <div class="profile-grid">
+            <!-- Left - Profile Info with Photo Upload -->
+            <div class="profile-left scroll-reveal">
+                <div class="profile-img-wrapper">
+                    {% if profile and profile.profile_pic %}
+                        <img src="{{ profile.profile_pic.url }}" alt="Profile" class="profile-img" id="profileImage">
+                    {% else %}
+                        <img src="https://ui-avatars.com/api/?name=Ritesh+Kumar&background=3b82f6&color=fff&size=180" alt="Profile" class="profile-img" id="profileImage">
+                    {% endif %}
+                    
+                    <!-- Photo Upload Overlay -->
+                    {% if user.is_authenticated %}
+                    <div class="photo-upload-overlay" onclick="document.getElementById('profilePicInput').click();">
+                        <i class="fas fa-camera"></i>
+                        <span>Upload Photo</span>
+                    </div>
+                    <form id="profilePicForm" method="POST" enctype="multipart/form-data" action="{% url 'portfolio:upload_profile_pic' %}">
+                        {% csrf_token %}
+                        <input type="file" name="profile_pic" id="profilePicInput" accept="image/*" style="display:none;" onchange="uploadProfilePic(this)">
+                    </form>
+                    {% endif %}
+                </div>
+                
+                <h3 class="profile-name">Ritesh Kumar</h3>
+                <p class="profile-title">Backend Developer | Django Enthusiast</p>
+                {% if profile and profile.bio %}
+                    <p class="profile-bio">{{ profile.bio }}</p>
+                {% else %}
+                    <p class="profile-bio">👨‍💻 Backend-focused developer with a growing passion for Django.</p>
+                {% endif %}
+                
+                <div class="skill-tags">
+                    {% for skill in skills %}
+                        <span class="skill-tag">{{ skill.name }}</span>
+                    {% empty %}
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">REST API</span>
+                    {% endfor %}
+                </div>
+                
+                <!-- Edit Profile Button (only shows bio edit) -->
+                {% if user.is_authenticated %}
+                    <button class="btn-edit-bio" onclick="toggleBioEdit()">
+                        <i class="fas fa-edit"></i> Edit Bio
+                    </button>
+                    
+                    <!-- Bio Edit Form -->
+                    <div id="bioEditForm" style="display:none; margin-top:12px;">
+                        <form method="POST" action="{% url 'portfolio:update_bio' %}">
+                            {% csrf_token %}
+                            <textarea name="bio" rows="3" style="width:100%;padding:10px;border-radius:10px;border:2px solid #e2e8f0;font-family:inherit;">{{ profile.bio|default:'' }}</textarea>
+                            <div style="margin-top:8px;display:flex;gap:10px;">
+                                <button type="submit" class="btn-primary" style="padding:8px 20px;font-size:0.9rem;">Save Bio</button>
+                                <button type="button" class="btn-outline" style="padding:8px 20px;font-size:0.9rem;" onclick="toggleBioEdit()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Right - Experience & Education -->
+            <div class="profile-right">
+                <div class="info-card scroll-reveal">
+                    <h4><span class="icon">📌</span> Experience</h4>
+                    <div class="timeline-item">
+                        <span class="date">2024 - Present</span><br>
+                        <span class="title">Freelance Backend Developer</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2023 - 2024</span><br>
+                        <span class="title">Backend Developer Intern</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2022 - 2023</span><br>
+                        <span class="title">Self-taught Backend Development</span>
+                    </div>
+                </div>
+
+                <div class="info-card scroll-reveal">
+                    <h4><span class="icon">🎓</span> Education</h4>
+                    <div class="timeline-item">
+                        <span class="title">BCA - Bachelor of Computer Applications</span><br>
+                        <span style="color:#64748b;font-size:0.9rem;">University of Technology (2022-2025)</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="title">Django Development Certification</span><br>
+                        <span style="color:#64748b;font-size:0.9rem;">Django Girls / Coursera</span>
+                    </div>
+                </div>
+
+                <div class="info-card scroll-reveal">
+                    <h4><span class="icon">⚡</span> Currently Learning</h4>
+                    <span class="learning-badge">React.js</span>
+                    <span class="learning-badge">Django REST</span>
+                    <span class="learning-badge">TypeScript</span>
+                    <span class="learning-badge">Docker</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PROJECTS SECTION ===== -->
+<section class="section" id="projects">
+    <div class="container">
+        <h2 class="section-title scroll-reveal">Featured <span class="highlight">Projects</span></h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle scroll-reveal">Some of my recent work</p>
+
+        <div class="projects-grid">
+            {% for project in projects %}
+                <div class="project-card scroll-reveal">
+                    <div class="project-image">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                        {% else %}
+                            🚀
+                        {% endif %}
+                    </div>
+                    <div class="project-info">
+                        <div class="tags">
+                            {% for tag in project.get_tags_list %}
+                                <span>{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description|truncatewords:30 }}</p>
+                        <div class="project-links">
+                            {% if project.live_link %}
+                                <a href="{{ project.live_link }}" class="live">🔗 Live</a>
+                            {% endif %}
+                            {% if project.github_link %}
+                                <a href="{{ project.github_link }}" class="code">📂 Code</a>
+                            {% endif %}
+                            <a href="{% url 'portfolio:project_detail' project.id %}" class="code">📄 Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:40px;">
+                    No featured projects yet. Check back soon!
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ===== CONTACT SECTION ===== -->
+<section class="section" id="contact">
+    <div class="container">
+        <h2 class="section-title scroll-reveal">Let's <span class="highlight">Connect</span></h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle scroll-reveal">Have a question or want to collaborate?</p>
+
+        <div class="contact-container">
+            <div class="contact-info-cards">
+                <div class="contact-item scroll-reveal">
+                    <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                    <div class="info">
+                        <h4>Email</h4>
+                        <p>riteshyadav.22564@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item scroll-reveal">
+                    <div class="icon-box"><i class="fas fa-phone"></i></div>
+                    <div class="info">
+                        <h4>Phone</h4>
+                        <p>+91 8969955743</p>
+                    </div>
+                </div>
+                <div class="contact-item scroll-reveal">
+                    <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info">
+                        <h4>Location</h4>
+                        <p>Patna, Bihar, India</p>
+                    </div>
+                </div>
+                <div class="contact-item scroll-reveal">
+                    <div class="icon-box"><i class="fab fa-github"></i></div>
+                    <div class="info">
+                        <h4>GitHub</h4>
+                        <p><a href="https://github.com/Rexignite" target="_blank" style="color:#3b82f6;text-decoration:none;">github.com/Rexignite</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <form method="POST" action="{% url 'portfolio:contact' %}" class="contact-form scroll-reveal">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="text" name="subject" placeholder="Subject (optional)">
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ===== STYLES ===== -->
+<style>
+    /* Profile Image Upload Overlay */
+    .profile-img-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    .profile-img-wrapper .photo-upload-overlay {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(135deg, #3b82f6, #7c3aed);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        border: 2px solid white;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    .profile-img-wrapper:hover .photo-upload-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .profile-img-wrapper .photo-upload-overlay:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .profile-img-wrapper .photo-upload-overlay i {
+        font-size: 0.9rem;
+    }
+
+    /* Edit Bio Button */
+    .btn-edit-bio {
+        background: rgba(59, 130, 246, 0.08);
+        color: #3b82f6;
+        border: 1px solid rgba(59, 130, 246, 0.15);
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 8px;
+    }
+
+    .btn-edit-bio:hover {
+        background: #3b82f6;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Toast Notification */
+    .toast-message {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        padding: 16px 24px;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        z-index: 9999;
+        animation: slideUp 0.5s ease;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .toast-message.success {
+        background: #22c55e;
+    }
+
+    .toast-message.error {
+        background: #ef4444;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Bio Edit Form */
+    #bioEditForm textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    #bioEditForm textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.06);
+    }
+</style>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+    // ===== PROFILE PHOTO UPLOAD =====
+    function uploadProfilePic(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('❌ File too large! Maximum 5MB allowed.');
+                input.value = '';
+                return;
+            }
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('❌ Please select an image file! (JPG, PNG, GIF)');
+                input.value = '';
+                return;
+            }
+
+            // Show loading state
+            const img = document.getElementById('profileImage');
+            const originalSrc = img.src;
+            img.style.opacity = '0.5';
+
+            // Submit form via AJAX
+            const form = document.getElementById('profilePicForm');
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    img.src = data.image_url + '?t=' + Date.now();
+                    img.style.opacity = '1';
+                    showToast('✅ Profile photo updated successfully!', 'success');
+                } else {
+                    img.style.opacity = '1';
+                    showToast('❌ ' + data.message, 'error');
+                }
+            })
+            .catch(error => {
+                img.style.opacity = '1';
+                showToast('❌ Error uploading photo!', 'error');
+            });
+
+            // Reset input
+            input.value = '';
+        }
+    }
+
+    // ===== TOGGLE BIO EDIT =====
+    function toggleBioEdit() {
+        const form = document.getElementById('bioEditForm');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+
+    // ===== TOAST NOTIFICATION =====
+    function showToast(message, type) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-message ' + type;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                toast.remove();
+            }, 500);
+        }, 3000);
+    }
+
+    console.log('👤 Profile section loaded with photo upload!');
+</script>
+
+{% endblock %}

@@ -1,0 +1,590 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact | Ritesh Kumar{% endblock %}
+
+{% block content %}
+
+<section class="section contact-page" style="padding-top: 120px;">
+    <div class="container">
+        <!-- Header -->
+        <div class="section-header scroll-reveal">
+            <span class="badge-contact">📬 Get In Touch</span>
+            <h2 class="section-title">Let's <span class="highlight">Connect</span></h2>
+            <div class="section-divider"></div>
+            <p class="section-subtitle">Have a question or want to work together? Feel free to reach out!</p>
+        </div>
+
+        <div class="contact-wrapper">
+            <!-- Left Side - Contact Info -->
+            <div class="contact-info-left scroll-reveal">
+                <div class="contact-card">
+                    <h3>📋 Contact Information</h3>
+                    <p class="contact-desc">I'm always open to new opportunities, collaborations, or just a friendly chat.</p>
+
+                    <div class="contact-details">
+                        <div class="contact-detail-item">
+                            <div class="icon-circle">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>riteshyadav.22564@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-detail-item">
+                            <div class="icon-circle">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+91 8969955743</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-detail-item">
+                            <div class="icon-circle">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Patna, Bihar, India</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-detail-item">
+                            <div class="icon-circle">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <h4>GitHub</h4>
+                                <p><a href="https://github.com/Rexignite" target="_blank">github.com/Rexignite</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-detail-item">
+                            <div class="icon-circle">
+                                <i class="fab fa-linkedin-in"></i>
+                            </div>
+                            <div>
+                                <h4>LinkedIn</h4>
+                                <p><a href="#" target="_blank">linkedin.com/in/ritesh-kumar</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-availability">
+                        <span class="status-dot"></span>
+                        <span>Available for Freelance & Internships</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Contact Form -->
+            <div class="contact-form-right scroll-reveal">
+                <div class="form-card">
+                    <h3>✉️ Send Me a Message</h3>
+                    <p>I'll get back to you within 24 hours.</p>
+
+                    <form method="POST" action="{% url 'portfolio:contact' %}" id="contactForm">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="name"><i class="fas fa-user"></i> Your Name *</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email Address *</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject"><i class="fas fa-tag"></i> Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Project Discussion">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message"><i class="fas fa-comment"></i> Message *</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Your message here..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+
+                    <div class="form-footer">
+                        <p><i class="fas fa-shield-alt"></i> Your information is safe with me.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map / Location Section -->
+        <div class="map-section scroll-reveal">
+            <div class="map-card">
+                <h3>📍 Find Me</h3>
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <p>Patna, Bihar, India</p>
+                    <span>Available for remote work worldwide</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CSS for Contact Page ===== -->
+<style>
+    .contact-page {
+        background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+        min-height: 100vh;
+    }
+
+    .badge-contact {
+        display: inline-block;
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        padding: 6px 20px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 1px solid rgba(59, 130, 246, 0.15);
+        margin-bottom: 16px;
+        letter-spacing: 0.5px;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .section-title .highlight {
+        background: linear-gradient(135deg, #3b82f6, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .section-divider {
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(135deg, #3b82f6, #7c3aed);
+        border-radius: 4px;
+        margin: 12px auto 16px;
+    }
+
+    .section-subtitle {
+        color: #64748b;
+        font-size: 1.05rem;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .contact-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    /* Left Side - Contact Info */
+    .contact-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
+    }
+
+    .contact-card h3 {
+        font-size: 1.4rem;
+        color: #0f172a;
+        margin-bottom: 8px;
+    }
+
+    .contact-desc {
+        color: #64748b;
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .contact-detail-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .contact-detail-item:hover {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: rgba(59, 130, 246, 0.2);
+        transform: translateX(4px);
+    }
+
+    .icon-circle {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #eff6ff, #dbeafe);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .contact-detail-item:hover .icon-circle {
+        background: linear-gradient(135deg, #3b82f6, #7c3aed);
+        color: white;
+        transform: rotate(-10deg) scale(1.05);
+    }
+
+    .contact-detail-item h4 {
+        font-size: 0.8rem;
+        color: #64748b;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .contact-detail-item p {
+        font-size: 0.95rem;
+        color: #0f172a;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .contact-detail-item p a {
+        color: #3b82f6;
+        text-decoration: none;
+    }
+
+    .contact-detail-item p a:hover {
+        text-decoration: underline;
+    }
+
+    .contact-availability {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 12px 16px;
+        background: rgba(34, 197, 94, 0.08);
+        border-radius: 10px;
+        border: 1px solid rgba(34, 197, 94, 0.15);
+    }
+
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22c55e;
+        animation: pulseDot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .contact-availability span {
+        color: #0f172a;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    /* Right Side - Form */
+    .form-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.3s ease;
+    }
+
+    .form-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
+    }
+
+    .form-card h3 {
+        font-size: 1.4rem;
+        color: #0f172a;
+        margin-bottom: 4px;
+    }
+
+    .form-card p {
+        color: #64748b;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #0f172a;
+        margin-bottom: 4px;
+    }
+
+    .form-group label i {
+        color: #3b82f6;
+        margin-right: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        color: #0f172a;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #3b82f6;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.06);
+        transform: scale(1.01);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #3b82f6, #7c3aed);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-submit i {
+        font-size: 1.1rem;
+    }
+
+    .form-footer {
+        margin-top: 16px;
+        text-align: center;
+    }
+
+    .form-footer p {
+        font-size: 0.85rem;
+        color: #94a3b8;
+    }
+
+    .form-footer p i {
+        color: #3b82f6;
+        margin-right: 6px;
+    }
+
+    /* Map Section */
+    .map-section {
+        margin-top: 20px;
+    }
+
+    .map-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 16px;
+        padding: 32px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .map-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(15, 23, 42, 0.06);
+    }
+
+    .map-card h3 {
+        font-size: 1.2rem;
+        color: #0f172a;
+        margin-bottom: 16px;
+    }
+
+    .map-placeholder {
+        padding: 40px;
+        background: linear-gradient(135deg, #eff6ff, #ede9fe);
+        border-radius: 12px;
+        border: 2px dashed rgba(59, 130, 246, 0.2);
+    }
+
+    .map-placeholder i {
+        font-size: 3rem;
+        color: #3b82f6;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .map-placeholder p {
+        font-size: 1.1rem;
+        color: #0f172a;
+        font-weight: 600;
+    }
+
+    .map-placeholder span {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    /* Success/Error Messages */
+    .form-messages {
+        margin-bottom: 16px;
+    }
+
+    .form-message {
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-message.success {
+        background: rgba(34, 197, 94, 0.1);
+        color: #16a34a;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .form-message.error {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Scroll Reveal */
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .contact-wrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .contact-page {
+            padding-top: 100px;
+        }
+        .section-title {
+            font-size: 2rem;
+        }
+        .contact-card,
+        .form-card,
+        .map-card {
+            padding: 24px;
+        }
+        .map-placeholder {
+            padding: 24px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .contact-detail-item {
+            flex-direction: column;
+            text-align: center;
+        }
+        .contact-detail-item:hover {
+            transform: none;
+        }
+        .contact-availability {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // ===== FORM SUBMIT - With Animation =====
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        const btn = this.querySelector('.btn-submit');
+        const originalText = btn.innerHTML;
+        
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        btn.disabled = true;
+        
+        // Re-enable after 3 seconds (if no server response)
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 3000);
+    });
+</script>
+
+{% endblock %}

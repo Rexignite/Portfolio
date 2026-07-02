@@ -1,0 +1,321 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Upload Project | Ritesh Kumar{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 120px; min-height: 80vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <!-- Card -->
+                <div class="upload-card scroll-reveal">
+                    <div class="upload-header">
+                        <div class="upload-icon">📤</div>
+                        <h3>Upload Project</h3>
+                        <p>Share your work with the community</p>
+                    </div>
+                    
+                    <div class="upload-body">
+                        <form method="POST" enctype="multipart/form-data" class="upload-form">
+                            {% csrf_token %}
+                            
+                            <!-- Title -->
+                            <div class="form-group">
+                                <label><i class="fas fa-heading"></i> Project Title *</label>
+                                {{ form.title }}
+                            </div>
+                            
+                            <!-- Description -->
+                            <div class="form-group">
+                                <label><i class="fas fa-align-left"></i> Description *</label>
+                                {{ form.description }}
+                            </div>
+                            
+                            <!-- Image & File -->
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label><i class="fas fa-image"></i> Image</label>
+                                    {{ form.image }}
+                                    <small>PNG, JPG (Max 5MB)</small>
+                                </div>
+                                <div class="form-group half">
+                                    <label><i class="fas fa-file"></i> File</label>
+                                    {{ form.file }}
+                                    <small>PDF, ZIP (Max 50MB)</small>
+                                </div>
+                            </div>
+                            
+                            <!-- Links -->
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label><i class="fab fa-github"></i> GitHub</label>
+                                    {{ form.github_link }}
+                                </div>
+                                <div class="form-group half">
+                                    <label><i class="fas fa-globe"></i> Live Demo</label>
+                                    {{ form.live_link }}
+                                </div>
+                            </div>
+                            
+                            <!-- Tags -->
+                            <div class="form-group">
+                                <label><i class="fas fa-tags"></i> Tags</label>
+                                {{ form.tags }}
+                                <small>Comma separated: Django, Python, React</small>
+                            </div>
+                            
+                            <!-- Submit -->
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-cloud-upload-alt"></i> Upload Project
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ===== UPLOAD CARD ===== */
+    .upload-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(15, 23, 42, 0.04);
+        transition: all 0.3s ease;
+    }
+
+    .upload-card:hover {
+        box-shadow: 0 12px 48px rgba(15, 23, 42, 0.06);
+        transform: translateY(-2px);
+    }
+
+    /* ===== HEADER ===== */
+    .upload-header {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        padding: 30px 32px;
+        text-align: center;
+        border-bottom: 3px solid #3b82f6;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .upload-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #7c3aed, #34d399, #3b82f6);
+        background-size: 300% 100%;
+        animation: gradientMove 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientMove {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .upload-icon {
+        font-size: 3rem;
+        margin-bottom: 8px;
+    }
+
+    .upload-header h3 {
+        color: #ffffff;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .upload-header p {
+        color: #94a3b8;
+        font-size: 0.95rem;
+        margin: 4px 0 0;
+    }
+
+    /* ===== BODY ===== */
+    .upload-body {
+        padding: 32px;
+    }
+
+    .upload-form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    /* ===== FORM GROUP ===== */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #0f172a;
+    }
+
+    .form-group label i {
+        color: #3b82f6;
+        width: 20px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.6);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        color: #0f172a;
+        width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.06);
+    }
+
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .form-group input[type="file"] {
+        padding: 10px;
+        border: 2px dashed rgba(59, 130, 246, 0.2);
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+    }
+
+    .form-group input[type="file"]:hover {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.04);
+    }
+
+    .form-group small {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        margin-top: 2px;
+    }
+
+    /* ===== FORM ROW ===== */
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .form-group.half {
+        flex: 1;
+    }
+
+    /* ===== SUBMIT BUTTON ===== */
+    .btn-submit {
+        padding: 14px 28px;
+        background: linear-gradient(135deg, #3b82f6, #7c3aed);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-submit i {
+        font-size: 1.1rem;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .upload-header {
+            padding: 24px 20px;
+        }
+        .upload-header h3 {
+            font-size: 1.3rem;
+        }
+        .upload-body {
+            padding: 24px 20px;
+        }
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        .upload-icon {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .upload-header {
+            padding: 20px 16px;
+        }
+        .upload-body {
+            padding: 20px 16px;
+        }
+        .form-group input,
+        .form-group textarea {
+            font-size: 0.9rem;
+            padding: 8px 12px;
+        }
+        .btn-submit {
+            padding: 12px 20px;
+            font-size: 0.95rem;
+        }
+    }
+</style>
+
+<script>
+    // ===== SCROLL REVEAL =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    });
+</script>
+
+{% endblock %}
